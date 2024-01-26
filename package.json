@@ -2,6 +2,8 @@
   "name": "my-blog",
   "version": "1.0.0",
   "description": "my blog about front-end and life",
+  "private": true,
+  "packageManager": "pnpm@8.14.1",
   "type": "module",
   "main": "index.js",
   "scripts": {
