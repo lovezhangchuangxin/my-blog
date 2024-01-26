@@ -34,7 +34,7 @@ echo "set-alias -name pn -value pnpm" > $profile.AllUsersAllHosts
 默认情况下，pnpm 使用符号链接（symbolic link，也叫软链接）将项目的直接依赖项添加到模块目录的根目录中。直接依赖的实际位置在
 `.pnpm/<name>@<version>/node_modules/<name>`，依赖包中的每个文件再硬链接（hard link）到.pnpm-store ( pnpm 资源在磁盘上的存储位置 )
 
-![基于pnpm的node_modules结构](images/pnpm/node_modules.svg)
+![基于pnpm的node_modules结构](/images/pnpm/node_modules.svg)
 
 `pnpm store path` 查看 pnpm store 的位置。
 
