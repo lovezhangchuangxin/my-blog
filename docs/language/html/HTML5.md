@@ -125,6 +125,12 @@ Canvas API 主要聚焦于 2D 图形。而同样使用\<canvas\>元素的 WebGL 
 
 <script>
   setTimeout(() => {
+    try {
+      document
+    }
+    catch {
+      return
+    }
     const canvas = document.getElementById("canvas-test");
     const ctx = canvas.getContext("2d");
 
