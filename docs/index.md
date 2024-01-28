@@ -8,8 +8,8 @@ hero:
   tagline: 基于 vitepress 搭建
   actions:
     - theme: brand
-      text: 快速开始
-      link: /engineering/pnpm
+      text: 文章列表
+      link: /articles
     - theme: alt
       text: GitHub
       link: https://github.com/lovezhangchuangxin/my-blog

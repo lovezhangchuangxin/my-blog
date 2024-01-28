@@ -33,5 +33,9 @@ export default defineConfig({
     search: {
       provider: 'local',
     },
+
+    lastUpdated: {
+      text: '最近更新于',
+    },
   },
 })
