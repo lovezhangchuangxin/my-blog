@@ -451,20 +451,67 @@ proxy.a // 报错
 
 ## this 问题
 
-对象被代理后，其方法中的 `this` 会指向 Proxy 代理或者 handler 对象，而不是原始对象。
+对象被代理后，`this` 的指向会发生变化。
 
 ```js
 const target = {
   m: function () {
-    console.log(this === proxy)
+    console.log('target method:', this === proxy)
+  },
+  get x() {
+    console.log('target getter:', this === target)
   },
 }
-const handler = {}
+const handler = {
+  get(target, propKey, receiver) {
+    console.log('handler get:', this === handler)
+    return target[propKey]
+  },
+}
 
 const proxy = new Proxy(target, handler)
 
-target.m() // false
-proxy.m() // true
+target.m() // target method: true
+proxy.m() // handler get: true target method: false
+target.x // target getter: true
+```
+
+- proxy 方法内部的 `this` 指向 proxy
+- proxy `getter` 的 `this` 指向 target
+- handler 中 `get` 捕捉器 的 `this` 指向 handler
+
+## Proxy 的局限性
+
+> 许多内建对象，例如 Map，Set，Date，Promise 等，都使用了所谓的“内部插槽”。
+>
+> 它们类似于属性，但仅限于内部使用，仅用于规范目的。例如，Map 将项目（item）存储在 [[MapData]] 中。内建方法可以直接访问它们，而不通过 [[Get]]/[[Set]] 内部方法。所以 Proxy 无法拦截它们。
+
+也就是说，在这些内建对象被 Proxy 代理后，由于代理对象没有这些内部插槽，因此内建方法将会失败。
+
+```js
+let map = new Map()
+
+let proxy = new Proxy(map, {})
+
+proxy.set('test', 1) // Error
+```
+
+事实上，类的私有字段也是通过内部插槽实现，因此也无法直接代理。
+
+幸运地是，使用 `bind` 可以使代理正常。
+
+```js{5,6}
+let map = new Map();
+
+let proxy = new Proxy(map, {
+  get(target, prop, receiver) {
+    let value = Reflect.get(...arguments);
+    return typeof value == 'function' ? value.bind(target) : value;
+  }
+});
+
+proxy.set('test', 1);
+alert(proxy.get('test')); // 1（工作了！）
 ```
 
 ## Proxy 与 Object.defineProperty() 的比较
