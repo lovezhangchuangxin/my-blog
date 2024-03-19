@@ -132,6 +132,11 @@ promise 对象有个内置属性[PromiseResult]表示 promise 对象的结果。
 
 ## 手写 Promise
 
+注意，下面的实现只是一个浅显的模仿，和实际效果有很多不同之处。比如：
+
+- 原生的 Promise 的 then 方法中回调的执行时机更靠近，而下面的实现使用 setTimeout 执行时机更靠后
+- 原生的 Promise.reject 如果没有指定失败的回调，会抛出异常，而下面的实现没有考虑这点
+
 ```js
 function Promise(executor) {
   this.PromiseState = 'pending'

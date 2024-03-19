@@ -198,7 +198,7 @@ function unique(arr) {
 - 用 `sort` 排序后一遍遍历去重
 - 用 `includes` 判断是否重复（效率很低）
 
-## 实现伪随机数
+## 7. 实现伪随机数
 
 首先，伪随机数不是真正的随机数，而是计算机根据一定的算法生成的数。因此，伪随机数是可以预测的。
 
@@ -217,7 +217,7 @@ const random = (seed) => {
 }
 ```
 
-## 计算 1 到 10000 之间的质数
+## 8. 计算 1 到 10000 之间的质数
 
 使用**埃拉托斯特尼筛法**，即从 2 开始，将 2 的倍数全部标记为非质数，然后找到下一个未标记的数，重复上述步骤。
 
@@ -243,7 +243,7 @@ function getPrimes(n) {
 console.log(getPrimes(10000))
 ```
 
-## 提取 URL 中的参数
+## 9. 提取 URL 中的参数
 
 使用 split 分割 url 字符串：
 
@@ -271,7 +271,7 @@ function getQueryParams(url) {
 
 注意 URL 对象的 searchParams 就是 URLSearchParams 对象。兼容性很好。
 
-## 打乱数组
+## 10. 打乱数组
 
 原理很简单，遍历数组，每次将当前元素与随机位置的元素交换。
 
@@ -294,7 +294,7 @@ function shuffle(arr) {
 }
 ```
 
-## URL 上如何编码参数
+## 11. URL 上如何编码参数
 
 URL 中只能携带 ASCII 字符，如果要携带特殊字符，需要进行编码。常用的编码方式有两种：
 
@@ -311,7 +311,7 @@ console.log(encodeURIComponent(url)) // https%3A%2F%2Fwww.baidu.com%2Fs%3Fwd%3D%
 
 对应的解码方法是 `decodeURI` 和 `decodeURIComponent`。
 
-## 控制 a, b, c 三个异步函数的执行顺序，a 和 b 同时执行，c 在 a 和 b 都执行完后执行
+## 12. 控制 a, b, c 三个异步函数的执行顺序，a 和 b 同时执行，c 在 a 和 b 都执行完后执行
 
 使用 `Promise.all`：
 
@@ -335,7 +335,7 @@ a(callback)
 b(callback)
 ```
 
-## 用 Promise 实现一个 sleep 函数
+## 13. 用 Promise 实现一个 sleep 函数
 
 ```javascript
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -343,7 +343,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 await sleep(1000)
 ```
 
-## 用 JS 实现发布订阅模式
+## 14. 用 JS 实现发布订阅模式
 
 实现 `on, off, emit` 方法：
 
@@ -381,7 +381,7 @@ class EventEmitter {
 }
 ```
 
-## ES6 相比于 ES5 有哪些新特性
+## 15. ES6 相比于 ES5 有哪些新特性
 
 首先说明，ES5 是 2009 年发布的标准，ES6 是 2015 年发布的标准 ES2015。然而，我们谈 ES6 的时候，一般并不是单指 ES2015 这一个版本，而是指自 ES2015 以来的所有版本，即现代的 Javascript。
 
@@ -407,7 +407,7 @@ class EventEmitter {
 - 新增了 `ESM`，用于实现模块化编程
 - 还有 `ArrayBuffer`、`Decorator` 等等很多很多
 
-## var、let、const 区别
+## 16.var、let、const 区别
 
 - var 声明的变量属于**函数作用域**，let 和 const 声明的变量属于**块级作用域**
 - var 可以**重复声明**，let 和 const 不可以重复声明
@@ -416,7 +416,7 @@ class EventEmitter {
 - var 和 let 可以先声明后赋值，const 必须同时声明和赋值
 - 在浏览器中，全局作用域下 var 声明的变量会成为 window 对象的属性，let 和 const 不会
 
-## 实现 call、apply、bind
+## 17. 实现 call、apply、bind
 
 ```javascript
 Function.prototype.myCall = function (context, ...args) {
@@ -450,14 +450,15 @@ Function.prototype.myBind = function (context, ...args) {
 }
 ```
 
-## 使用箭头函数时要注意什么？
+## 18. 使用箭头函数时要注意什么？
 
-- 箭头函数没有自己的 `this`，它的 `this` 是继承自父作用域的，因此箭头函数不能用于构造函数，也没有 `prototype` 属性，不过 `_proto_` 属性是存在的
+- 箭头函数没有自己的 `this`，它的 `this` 是继承自父作用域的，因此箭头函数不能用于构造函数，也没有 `prototype` 属性，不过 `__proto__` 属性是存在的
 - 箭头函数内不能使用 `arguments` 对象，可以使用 `rest` 参数代替
 - 箭头函数不能使用 `yield` 关键字，因此箭头函数不能用作 Generator 函数
 - `call`、`apply`、`bind` 无法改变箭头函数的 `this` 指向
+- 箭头函数中没有自己的 `super`，它的 `super` 是继承自父作用域的
 
-## 自己实现模板字符串的解析
+## 19. 自己实现模板字符串的解析
 
 例子：给定字符串 `str="你的名字是${name}"` 和 `name = "张三"`，请定义函数 `parse`，使得 `parse(str)` 返回 `你的名字是张三`。
 
@@ -469,20 +470,20 @@ function parse(str) {
 }
 ```
 
-## Set 和 WeakSet，Map 和 WeakMap 的区别
+## 20. Set 和 WeakSet，Map 和 WeakMap 的区别
 
 - `Set` 和 `Map` 是强引用，`WeakSet` 和 `WeakMap` 是弱引用
 - `WeakSet` 中的元素只能是对象，`WeakMap` 中的键只能是对象，而 `Set` 和 `Map` 中的元素和键可以是任意类型
 - `WeakSet` 和 `WeakMap` 不可迭代，没有 `size` 属性，没有 `clear` 方法，没有 `forEach`
 
-## EMS 和 CJS 的区别
+## 21. ESM 和 CJS 的区别
 
 - ESM 是静态加载，在编译时就确定了模块的依赖关系，而 CJS 是动态加载，只有在运行时才能确定模块的依赖关系
 - ESM 有 tree-shaking，可以在编译时去除无用代码
 - ESM 的 import 可以异步加载，而 CJS 的 require 是同步加载
 - ESM 导出的变量是只读的，而 CJS 导出的变量是可变的
 
-## Promise 中值穿透
+## 22. Promise 值穿透
 
 Promise 中的值穿透是指，如果 `then`、`catch` 方法中没有传入函数，那么会将上一个 `then` 方法中返回的值传递给下一个 `then`、`catch` 方法。
 
@@ -494,7 +495,7 @@ Promise.resolve(1)
   })
 ```
 
-## `["1", "2", "3"].map(parseInt)` 输出什么？
+## 23. `["1", "2", "3"].map(parseInt)` 输出什么？
 
 `parseInt` 函数有两个参数，第一个参数是要转换的字符串，第二个参数是进制。`map` 方法的回调函数有三个参数，分别是当前元素、当前索引、原数组。
 
@@ -508,7 +509,7 @@ Promise.resolve(1)
 
 所以输出是 `[1, NaN, NaN]`。
 
-## 手写数组方法 reduce
+## 24. 手写数组方法 reduce
 
 ```javascript
 Array.prototype.myReduce = function (callback, initialValue) {
@@ -522,4 +523,135 @@ Array.prototype.myReduce = function (callback, initialValue) {
   }
   return acc
 }
+```
+
+## 25. LRU 缓存是什么，请实现一个 LRU 缓存类
+
+> 参考：[Touryung's Blog - LRU 居然翻译成最近最少使用？真相原来是这样！（附力扣题解）](https://www.cnblogs.com/touryung/p/17151753.html)
+
+LRU 是一种缓存淘汰策略。当缓存满了淘汰数据的时候，它会删除最久未被访问的数据。当访问一个到数据时，它会将该数据提前。
+
+LRU 中需要在频繁地进行数据的查找插入删除，因此采用**哈希表**+**双向链表**来实现。哈希表用于快速查找数据，双向链表用于快速删除和插入数据。
+
+双向链表的节点要同时存 key 和 value，这是因为淘汰节点要根据节点的 key 进而删除哈希表中的数据，如果只有 value 无法找到哈希表中对应的数据。
+
+```javascript
+// 先实现双向链表
+function Node(key, value) {
+  this.key = key
+  this.value = value
+  this.prev = null
+  this.next = null
+}
+
+// 插入尾节点
+function insertTail(tail, node) {
+  tail.prev.next = node
+  node.prev = tail.prev
+  node.next = tail
+  tail.prev = node
+}
+
+// 删除节点
+function removeNode(node) {
+  node.prev.next = node.next
+  node.next.prev = node.prev
+}
+
+var LRUCache = function (capacity) {
+  this.capacity = capacity
+  // 初始化哈希表
+  this.map = new Map()
+  // 初始化双向链表
+  this.head = new Node()
+  this.tail = new Node()
+  this.head.next = this.tail
+  this.tail.prev = this.head
+}
+
+LRUCache.prototype.get = function (key) {
+  if (!this.map.has(key)) return -1
+
+  const node = this.map.get(key)
+  // 提高优先级，先删除后插入
+  removeNode(node)
+  insertTail(this.tail, node)
+
+  return node.value
+}
+
+LRUCache.prototype.put = function (key, value) {
+  // 已经存在，修改值并移动
+  if (this.map.has(key)) {
+    const node = this.map.get(key)
+    node.value = value
+    removeNode(node)
+    insertTail(this.tail, node)
+    return
+  }
+  // 容量不够，淘汰最久未被使用的节点
+  if (this.map.size >= this.capacity) {
+    // 删除头节点
+    this.map.delete(this.head.next.key)
+    removeNode(this.head.next)
+  }
+  // 插入新节点
+  const node = new Node(key, value)
+  this.map.set(key, node)
+  insertTail(this.tail, node)
+}
+```
+
+注意：在 JS 中 map，set是有序的，因此可以直接使用 map 来实现 LRU 缓存。map.keys() 返回的是一个迭代器，迭代器的顺序是插入的顺序。
+
+## 26. 如何取消 promise
+
+首先需要说明的是，传入 Promise 的 executor 函数是立即执行，因此不可能取消。所谓的取消 promise，是指在 promise 状态变更之前，提前调用 reject，使得之后的成功的回调不能执行。
+
+这有业务场景呢？比如我处于页面 A，使用 Promise 包装一个异步任务，其成功的回调是跳转到页面 B。但是现在我又点击了页面 C。假如页面 A 创建的 Promise 没有被销毁，那么等异步任务完成后，又会跳转到页面 B。这显然是不合理的。
+
+```typescript
+class CancellablePromise<T> extends Promise<T> {
+  constructor(
+    executor: (
+      resolve: (value: T | PromiseLike<T>) => void,
+      reject: (reason?: any) => void,
+    ) => void,
+    abortSignal?: AbortSignal,
+  ) {
+    let _reject: (reason?: any) => void
+
+    super((resolve, reject) => {
+      _reject = reject
+      return executor(resolve, reject)
+    })
+
+    abortSignal?.addEventListener('abort', (reason) => {
+      _reject(reason)
+    })
+  }
+}
+```
+
+使用：
+
+```typescript
+// 使用
+const controller = new AbortController()
+const signal = controller.signal
+const promise = new CancellablePromise((resolve) => {
+  setTimeout(() => {
+    resolve('done')
+  }, 1000)
+}, signal)
+
+promise.then(console.log).catch((event: Event) => {
+  let target = event.target
+  if (target instanceof AbortSignal) {
+    console.log(`aborted: ${target.aborted}, reason: ${target.reason}`)
+  } else {
+    console.log(event)
+  }
+})
+controller.abort()
 ```
