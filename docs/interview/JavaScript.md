@@ -655,3 +655,86 @@ promise.then(console.log).catch((event: Event) => {
 })
 controller.abort()
 ```
+
+## 27. 防抖和节流
+
+防抖和节流是控制函数执行频率的两种方法。比如浏览器的 `resize`、`scroll`、`mousemove` 事件，滚动加载、搜索联想等场景，由于事件触发频繁，容易导致性能问题。这时候可以通过防抖和节流来优化性能。
+
+防抖是指延迟一定时间再执行，如果在这段时间内再次触发，则重新计时。
+节流是指一定时间内只执行一次。
+
+拿公交车来举例，将函数执行一次比作公交车跑一趟。假设防抖和节流的时间间隔都是十分钟。
+
+防抖是指公交车司机想在十分钟后发车，一旦有客人上车了，司机就重新计时。（因为一个客人上车意味着接下来可能还有客人，所以需要重新等十分钟）
+
+节流是指公交车司机每隔十分钟发一趟车。
+
+防抖实现：
+
+```javascript
+function debounce(fn, delay) {
+  let timer = null
+  return function (...args) {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      fn.apply(this, args)
+    }, delay)
+  }
+}
+```
+
+节流：
+
+时间戳写法：
+
+```javascript
+function throttle(fn, delay) {
+  let last = 0
+  return function (...args) {
+    const now = Date.now()
+    if (now - last > delay) {
+      fn.apply(this, args)
+      last = now
+    }
+  }
+}
+```
+
+定时器写法：
+
+```javascript
+function throttle(fn, delay) {
+  let timer = null
+  return function (...args) {
+    if (!timer) {
+      timer = setTimeout(() => {
+        fn.apply(this, args)
+        timer = null
+      }, delay)
+    }
+  }
+}
+```
+
+时间戳写法和定时器写法的区别是：前者是同步执行，后者是异步执行。
+
+## 28. 函数柯里化
+
+函数柯里化是指将一个多参数的函数转换为一系列单参数函数的过程。比如将 `f(a, b, c)` 转换为 `f(a)(b)(c)`。
+
+实现：
+
+```javascript
+function curry(func) {
+  return function curried(...args) {
+    if (args.length >= func.length) {
+      return func.apply(this, args)
+    } else {
+      // return function (...args2) {
+      //   return curried.apply(this, args.concat(args2))
+      // }
+      return curried.bind(this, ...args)
+    }
+  }
+}
+```

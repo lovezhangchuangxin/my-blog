@@ -108,7 +108,7 @@ ENTRYPOINT ["executable", "param1", "param2"]
 CMD [ "param1", "param2"]
 ```
 
-根据 Dockerfile 文件构建镜像：`docker build -t 镜像名 Dockerfile 目录`
+根据 Dockerfile 文件构建镜像：`docker build -t 镜像名 Dockerfile所在目录`
 
 **ENTRYPOINT 和 CMD**
 
