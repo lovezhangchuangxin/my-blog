@@ -11,7 +11,10 @@ const articles = data.filter(({ url }) => url !== '/' && url !== __fileurl)
 
 const getTitle = (url: string) => {
   const names = url.split('/')
-  const filename = names.pop()!
+  let filename = names.pop()!
+  if(!filename) {
+    filename = names.pop()!
+  }
   const title = filename.replace(/\.html$/, '')
   if (title === 'index') return names.pop()
   return title
