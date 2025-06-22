@@ -234,6 +234,7 @@ function myJSONstringify(
     return undefined;
   }
 
+  // 无法处理 bigint
   if (type === "bigint") {
     throw new TypeError("Do not know how to serialize a BigInt");
   }
@@ -250,18 +251,22 @@ function myJSONstringify(
     return "null";
   }
 
+  // 存在循环引用
   if (seen.has(target)) {
     throw new TypeError("Converting circular structure to JSON");
   }
 
-  if (target.toJSON) {
+  // 有 toJSON 方法直接调
+  if (typeof target.toJSON === "function") {
     return target.toJSON();
   }
 
   let jsonStr = "";
   seen.add(target);
   replacer ||= (_key, val) => val;
+  // 两个元素之间的空格
   const spacer = space > 0 ? "\n" + " ".repeat(space * layer) : "";
+  // 最后一个元素后面的空格
   const endSpacer = spacer.slice(0, -space);
 
   if (target instanceof Array) {
@@ -269,6 +274,7 @@ function myJSONstringify(
       .map((item, index) => {
         const val = replacer(
           index,
+          // 深层元素递归处理，下同
           myJSONstringify(item, replacer, space, layer + 1, seen)
         );
         return val;
