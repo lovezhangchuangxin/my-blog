@@ -219,6 +219,78 @@ function myJsonStringify(obj) {
 }
 ```
 
+较为完整的实现：
+
+```js
+function myJSONstringify(
+  target,
+  replacer,
+  space = 0,
+  layer = 1, // 缩紧层级
+  seen = new Set() // 用来判断是否存在循环应用
+) {
+  const type = typeof target;
+  if (type === "undefined" || type === "symbol" || type === "function") {
+    return undefined;
+  }
+
+  if (type === "bigint") {
+    throw new TypeError("Do not know how to serialize a BigInt");
+  }
+
+  if (type !== "object") {
+    if (seen.size) {
+      return typeof target === "string" ? `"${target}"` : target;
+    } else {
+      return target + "";
+    }
+  }
+
+  if (target === null) {
+    return "null";
+  }
+
+  if (seen.has(target)) {
+    throw new TypeError("Converting circular structure to JSON");
+  }
+
+  if (target.toJSON) {
+    return target.toJSON();
+  }
+
+  let jsonStr = "";
+  seen.add(target);
+  replacer ||= (_key, val) => val;
+  const spacer = space > 0 ? "\n" + " ".repeat(space * layer) : "";
+  const endSpacer = spacer.slice(0, -space);
+
+  if (target instanceof Array) {
+    jsonStr = `[${spacer}${target
+      .map((item, index) => {
+        const val = replacer(
+          index,
+          myJSONstringify(item, replacer, space, layer + 1, seen)
+        );
+        return val;
+      })
+      .join(`,${spacer}`)}${endSpacer}]`;
+  } else {
+    jsonStr = `{${spacer}${Object.keys(target)
+      .map((key) => {
+        const val = replacer(
+          key,
+          myJSONstringify(target[key], replacer, space, layer + 1, seen)
+        );
+        return `"${key}": ${val}`;
+      })
+      .join(`,${spacer}`)}${endSpacer}}`;
+  }
+
+  seen.delete(target);
+  return jsonStr;
+}
+```
+
 ## eval 实现 JSON.parse
 
 在不支持 `JSON` 的旧浏览器中，可以考虑使用 `eval` 来解析 JSON。
