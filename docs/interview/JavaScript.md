@@ -738,3 +738,59 @@ function curry(func) {
   }
 }
 ```
+
+## 实现对象的扁平化和反扁平化
+
+实现两个函数：flatObject, unflatObject，效果如下：
+
+```js
+const target = {
+  a: {
+    b: { c: 3, d: 4 },
+  },
+  e: {
+    f: 1,
+    g: {
+      h: 2,
+    },
+  },
+};
+
+let result;
+// { 'a.b.c': 3, 'a.b.d': 4, 'e.f': 1, 'e.g.h': 2 }
+console.log((result = flatObject(target)));
+console.log(unflatObject(result)); // 结果和 target 结构一样
+```
+
+```js
+function flatObject(target) {
+  if (typeof target !== "object" || target === null) {
+    return target;
+  }
+
+  const result = {};
+  Object.entries(target).forEach(([key, val]) => {
+    if (typeof val === "object" && val !== null) {
+      // dfs，把深层对象先扁平化，然后拼上当前的 key 即可。
+      Object.entries(flatObject(val)).forEach(([key2, val2]) => {
+        result[`${key}.${key2}`] = val2;
+      });
+    } else {
+      result[key] = val;
+    }
+  });
+  return result;
+}
+
+function unflatObject(target) {
+  const result = {};
+  Object.entries(target).forEach(([key, val]) => {
+    const keys = key.split(".");
+    const lastKey = keys.pop();
+    let o = result;
+    keys.forEach((k) => (o = o[k] ||= {}));
+    o[lastKey] = val;
+  });
+  return result;
+}
+```
